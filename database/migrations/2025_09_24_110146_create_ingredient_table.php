@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ingredient', function (Blueprint $table) {
             $table->id()->comment('ID игредиента');
             $table->string('name')->comment('наименование ингредиента');
+            $table->string('unit_of_measurement')->nullable()->comment('Единица измерения');
         });
         DB::statement("COMMENT ON TABLE \"ingredient\" IS 'ингредиент'");
     }

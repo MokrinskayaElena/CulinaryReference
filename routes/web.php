@@ -11,8 +11,8 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 
 // Маршрут для отображения всех блюд с указанием категории
-Route::get('/dishes', [DishController::class, 'index']);
-
+Route::resource('/dishes', DishController::class);
+Route::get('/dishes/create', [DishController::class, 'create'])->name('dishes.create');
 
 // Маршрут для отображения всех ингредиентов для блюда
 Route::get('/dishes/{id}', [DishController::class, 'showIngredients'])->name('dishes.ingredients');

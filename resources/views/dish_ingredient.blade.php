@@ -23,7 +23,7 @@
         <tr>
             <td>{{ $ingredient->id }}</td>
             <td>{{ $ingredient->name }}</td>
-            <td>{{ $ingredient->pivot->quantity }}</td>
+            <td>{{ $ingredient->pivot->quantity }} {{ $ingredient->unit_of_measurement }}</td>
         </tr>
         @endforeach
     </tbody>

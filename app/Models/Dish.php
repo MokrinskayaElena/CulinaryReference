@@ -8,6 +8,15 @@ class Dish extends Model
 {
     protected $table = 'dish';
 
+    protected $fillable = [
+        // все поля, которые нужно заполнять массово
+        'category_id',
+        'name',
+        'preparation_method',
+        'preparation_time'
+    ];
+
+
     public function category()
     {
         return $this->belongsTo(Category::class);
