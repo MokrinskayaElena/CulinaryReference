@@ -9,10 +9,13 @@ use App\Models\Category;
 class DishController extends Controller
 {
     
-    public function index() {
-    // Загружаем блюда вместе с их категориями, чтобы избежать N+1 запросов
-    $dishes = Dish::with('category')->get();
-    return view('dishes', compact('dishes'));
+    public function index(Request $request) {
+        // Получаем значение perpage из запроса или по умолчанию (например, 2)
+        $perPage = $request->get('perpage', 2);
+        // Загружаем блюда с категориями, с пагинацией
+        $dishes = Dish::with('category')->paginate($perPage);
+        // Передаем переменную perpage в представление, чтобы сохранить выбранное значение
+        return view('dishes', compact('dishes', 'perPage'));
     }
 
     public function showIngredients($id) {

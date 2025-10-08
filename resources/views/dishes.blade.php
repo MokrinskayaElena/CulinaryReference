@@ -5,12 +5,25 @@
     <title>Все блюда с категориями</title>
 </head>
 <body>
+    <h2>Список всех блюд с категориями</h2>
+
 <div style="display: flex; align-items: center; margin-bottom: 15px;">
-    <h2 style="margin: 0;">Список всех блюд с категориями</h2>
-    <a href="{{ route('dishes.create') }}"
-       style="margin-left: 4rem; padding:8px 12px; background-color:#4CAF50; color:white; text-decoration:none; border-radius:4px;">
+
+    <form method="GET" action="{{ route('dishes.index') }}" style="margin-left:1rem;">
+    <label for="perpage">Количество элементов на странице:</label>
+    <select name="perpage" id="perpage" onchange="this.form.submit()">
+        <option value="2" {{ $perPage == 2 ? 'selected' : '' }}>2</option>
+        <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
+        <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+    </select>
+    </form>
+    <!-- <a href="{{ route('dishes.create') }}"
+       style="margin-left: 7rem; padding:8px 12px; background-color:#4CAF50; color:white; text-decoration:none; border-radius:4px;">
         Добавить новый рецепт
-    </a>
+    </a> -->
+        <form action="{{ route('dishes.create') }}">
+        <button style="margin-left: 7rem; padding:8px 12px; background-color:#4CAF50; color:white; border-radius:4px;">Добавить новый рецепт</button>
+    </form>
 </div>
 
 <table border="1">
@@ -55,10 +68,12 @@
         </td>
         </tr>
         @endforeach
-        
     </tbody>
 </table>
 <br>
-
+<!-- Элементы управления пагинацией -->
+ <!-- {{ $dishes->appends(request()->except('page'))->links() }} -->
+ {{ $dishes->appends(['perpage' => $perPage])->links() }}
+<!-- {{ $dishes->links() }} -->
 </body>
 </html>
