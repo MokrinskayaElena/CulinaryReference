@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class DishController extends Controller
 {
     
     public function index(Request $request) {
         // Получаем значение perpage из запроса или по умолчанию (например, 2)
-        $perPage = $request->get('perpage', 2);
-        // Загружаем блюда с категориями, с пагинацией
-        $dishes = Dish::with('category')->paginate($perPage);
+        $perPage = $request->get('perpage', 5);
+        // Загружаем блюда с категориями с пагинацией
+            $dishes = Dish::with('category')->paginate($perPage);
         // Передаем переменную perpage в представление, чтобы сохранить выбранное значение
         return view('dishes', compact('dishes', 'perPage'));
     }
@@ -39,6 +40,7 @@ class DishController extends Controller
             'preparation_method' => 'required|string|max:500',
             'preparation_time' => 'required|integer|min:1',
         ]);
+        $validated['user_id'] = auth()->id();
 
         Dish::create($validated);
 
@@ -49,6 +51,10 @@ class DishController extends Controller
     public function edit($id)
     {
         $dish = Dish::findOrFail($id);
+        // Проверяем разрешение на редактирование
+        if (Gate::denies('update-dish', $dish)) {
+            return redirect('/error')->with('message', 'У вас нет прав редактировать этот рецепт.');
+        }
         $categories = Category::all();
         return view('dishes_edit', compact('dish', 'categories'));
     }
@@ -72,6 +78,10 @@ class DishController extends Controller
     public function destroy($id)
     {
         $dish = Dish::findOrFail($id);
+        // Проверяем разрешение на удаление
+        if (Gate::denies('delete-dish', $dish)) {
+            return redirect('/error')->with('message', 'У вас нет прав удалять этот рецепт.');
+        }
         $dish->delete();
         return redirect()->route('dishes.index');
     } 

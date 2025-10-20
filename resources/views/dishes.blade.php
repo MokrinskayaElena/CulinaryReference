@@ -15,12 +15,9 @@
         <option value="2" {{ $perPage == 2 ? 'selected' : '' }}>2</option>
         <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
         <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+        <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
     </select>
     </form>
-    <!-- <a href="{{ route('dishes.create') }}"
-       style="margin-left: 7rem; padding:8px 12px; background-color:#4CAF50; color:white; text-decoration:none; border-radius:4px;">
-        Добавить новый рецепт
-    </a> -->
         <form action="{{ route('dishes.create') }}">
         <button style="margin-left: 7rem; padding:8px 12px; background-color:#4CAF50; color:white; border-radius:4px;">Добавить новый рецепт</button>
     </form>
@@ -34,8 +31,8 @@
             <!-- <th>Способ приготовления</th> -->
             <th>Время приготовления (мин)</th>
             <!-- <th>Создано</th>
-            <th>Обновлено</th>
-            <th>Пользователь</th> -->
+            <th>Обновлено</th> -->
+            <th>Пользователь</th>
             <th>Категория</th>
             <th>Действия</th> <!-- добавляем колонку для действий -->
         </tr>
@@ -48,8 +45,8 @@
             <!-- <td>{{ $dish->preparation_method }}</td> -->
             <td>{{ $dish->preparation_time }}</td>
             <!-- <td>{{ $dish->created_at }}</td>
-            <td>{{ $dish->updated_at }}</td>
-            <td>{{ $dish->user_id }}</td> -->
+            <td>{{ $dish->updated_at }}</td> -->
+            <td>{{ $dish->user ? $dish->user->name : 'Нет пользователя' }}</td>
             <td>{{ $dish->category ? $dish->category->name : 'Без категории' }}</td>
             <td>
             <div style="display: inline-flex; gap: 10px;">
@@ -72,8 +69,8 @@
 </table>
 <br>
 <!-- Элементы управления пагинацией -->
- <!-- {{ $dishes->appends(request()->except('page'))->links() }} -->
- {{ $dishes->appends(['perpage' => $perPage])->links() }}
+ {{ $dishes->appends(request()->except('page'))->links() }}
+ <!-- {{ $dishes->appends(['perpage' => $perPage])->links() }} -->
 <!-- {{ $dishes->links() }} -->
 </body>
 </html>

@@ -13,9 +13,9 @@ class Dish extends Model
         'category_id',
         'name',
         'preparation_method',
-        'preparation_time'
+        'preparation_time',
+        'user_id'
     ];
-
 
     public function category()
     {
@@ -26,5 +26,9 @@ class Dish extends Model
     {
         return $this->belongsToMany(Ingredient::class, 'dish_ingredient')
         ->withPivot('quantity');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
