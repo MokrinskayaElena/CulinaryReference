@@ -25,15 +25,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::defaultView('pagination::default');
 
-        $this->registerPolicies();
-        // Определение Gate для редактирования рецепта
-        Gate::define('update-dish', function ($user, Dish $dish) {
-            return $user->id === $dish->user_id; // сравниваем id пользователя и поля user_id
-        });
-
-        // Определение Gate для удаления рецепта
-        Gate::define('delete-dish', function ($user, Dish $dish) {
-            return $user->id === $dish->user_id;
-        });
     }
 }
