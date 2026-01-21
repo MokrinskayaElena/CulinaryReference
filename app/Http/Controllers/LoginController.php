@@ -23,9 +23,7 @@ class LoginController extends Controller
             return redirect()->intended('login');
         }
         // Если аутентификация не удалась, возвращаем назад с ошибкой
-        return back()->withErrors([
-            'error' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email', 'password'); // Сохраняем введенные email и пароль для формы
+        return back()->with('error', 'Не смогли найти такого пользователя. Пожалуйста, проверьте логин и пароль!')->onlyInput('email', 'password'); // Сохраняем введенные email и пароль для формы
     }
     
     public function login(Request $request)
@@ -43,6 +41,6 @@ class LoginController extends Controller
         // Генерация нового CSRF-токена для защиты формы
         $request->session()->regenerateToken();
         // Перенаправление на страницу входа
-        return redirect('login');
+        return redirect('/profile');
     }
 }

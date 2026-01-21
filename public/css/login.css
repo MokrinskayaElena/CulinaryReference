@@ -1,0 +1,86 @@
+
+body {
+    background-image: url("../img/Frame\ 1.png");
+    background-size: cover; /* Чтобы изображение занимало весь фон */
+    background-repeat: no-repeat; /* Чтобы изображение не повторялось */
+    /* background-position: center -5%; */
+    font-size: 1vw;
+    cursor: default;
+
+}
+h1{
+    /* -webkit-text-stroke: 0.1vw rgba(47, 44, 44, 0.83); */
+    text-shadow: 0px 6px 10px 0px rgba(0,0,0,0.2);
+    letter-spacing: 0.5vw;
+    margin-top: 10%;
+    color: #e9e1de;
+   
+}
+.back {
+    text-decoration: none;
+    font-family: Montserrat;
+    background: #e7e5eaf6;
+    font-size: 1vw;
+    padding: 0.5vw 2vw 0.5vw 2vw;
+    /* margin-top: 50vw; */
+}
+.between {
+    display: flex;
+    margin: 10% 2% 0 45%;
+    padding-bottom: 8%;
+    background: #3e354af6;
+}
+form {
+    height: 50%;
+    width: 90%;  
+}
+input {
+    height: 30%;
+    width: 100%;
+    margin-top: 5%;
+    font-size: 1vw;
+    font-family: Montserrat;
+}
+button {
+    margin-top: 5%; 
+    cursor: pointer;
+    height: 30%;
+    width: 100%;
+    font-size: 1vw;
+    font-family: Montserrat;
+    float: right;
+}
+.Forma {
+    margin-left: 5%;
+}
+@media (max-width:1199px) and (min-width:200px){
+    body {
+        /* background: #3e354af6; */
+        background-size:auto;
+        font-size: 4vw;
+    }
+    .between {
+        display: inline-block;
+        margin: 10% 2% 0 2%;
+        padding-bottom: 8%;
+        width: 96%;
+    }
+    input {
+        font-size: 5vw;
+        height: 7vw;
+    }
+    button {
+        font-size: 4vw;
+        height: 7vw;
+        float: right;
+        width: 65%;
+    }
+    .back {
+        font-size: 4vw;
+        padding: 2vw 7vw 2vw 7vw;
+        /* margin-top: 50vw; */
+    }
+    .form {
+        margin-top: 10vh;
+    }
+}
