@@ -19,7 +19,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // Регистрация нового идентификатора сессии для защиты от атак "session fixation"
             $request->session()->regenerate();
-            // Перенаправление пользователя на запрошенную страницу или на главную
+            // Перенаправление пользователя 
             return redirect()->intended('login');
         }
         // Если аутентификация не удалась, возвращаем назад с ошибкой
@@ -30,7 +30,7 @@ class LoginController extends Controller
     
     public function login(Request $request)
     {
-        // Возвращаем представление формы логина, передавая текущего пользователя (если есть)
+        // Возвращаем представление формы логина, передавая текущего пользователя 
         return view('login', ['user' => Auth::user()]);
     }
 

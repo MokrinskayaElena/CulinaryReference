@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error</title>
-</head>
-<body>
-    <h2>{{ $message }}</h2>
-    <a href="{{url('dishes')}}"> Назад </a>
-</body>
-</html>
+@extends('layout')
+
+@section('title', 'Ошибка')
+
+@section('content')
+<div class="text-center">
+    <h2 class="text-danger mb-4">{{ $message }}</h2>
+    <a href="{{ url('dishes') }}" class="btn btn-primary">Назад</a>
+</div>
+@endsection

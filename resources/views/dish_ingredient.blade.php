@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8" />
-    <title>Блюдо: {{ $dish->name }}</title>
-</head>
-<body>
-<h2>Блюдо: {{ $dish->name }} </h2>
-<h4>Категория: {{ $dish->category->name ?? 'Без категории' }}</h4>
-<h4>Время приготовления: {{ $dish->preparation_time }} мин.</h4>
+@extends('layout')
+
+@section('title', 'Блюдо: ' . $dish->name)
+
+@section('content')
+
+<h2>
+    <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm ml-2" title="Назад">
+     <i class="fa fa-arrow-left"></i>
+    </a>
+    Блюдо: {{ $dish->name }}</h2>
+
+<div class="mb-4">
+    <h5>Категория: {{ $dish->category->name ?? 'Без категории' }}</h5>
+    <h5>
+        Время приготовления: {{ $dish->preparation_time }} мин.
+    </h5>
+</div>
 
 <h4>Ингредиенты:</h4>
-<table border="1">
+@if($dish->ingredients && $dish->ingredients->count() > 0)
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -28,7 +37,14 @@
         @endforeach
     </tbody>
 </table>
+@else
+<div class="alert alert-info" role="alert">
+    Ингредиенты не добавлены.
+</div>
+@endif
+
 <h4>Способ приготовления:</h4>
-<p> {{ $dish->preparation_method }}</p>
-</body>
-</html>
+<div class="border p-3 rounded bg-light" style="max-width: 100%; word-wrap: break-word;">
+    <p>{{ $dish->preparation_method }}</p>
+</div>
+@endsection

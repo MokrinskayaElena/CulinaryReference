@@ -85,5 +85,20 @@ class DishController extends Controller
         $dish->delete();
         return redirect()->route('dishes.index');
     } 
+
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    
+    if (empty($query)) {
+        // Если запрос пустой, можно просто вернуть ту же страницу или перенаправить назад
+        return redirect()->back()->with('error', 'Пожалуйста, введите запрос для поиска.');
+    }
+
+    // Поиск с использованием ILIKE для PostgreSQL
+    $dishes = Dish::where('name', 'ILIKE', '%' . $query . '%')->get();
+
+    return view('search_results', compact('dishes', 'query'));
+}
     
 }

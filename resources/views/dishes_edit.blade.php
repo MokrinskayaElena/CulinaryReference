@@ -1,49 +1,59 @@
-<title>Редактирование</title>
-<h2>Редактировать блюдо</h2>
-<form action="{{ route('dishes.update', $dish->id) }}" method="POST">
+@extends('layout')
+
+@section('title', 'Редактирование блюда')
+
+@section('content')
+<h2 class="mb-4">Редактировать блюдо</h2>
+<form action="{{ route('dishes.update', $dish->id) }}" method="POST" class="needs-validation" novalidate>
     @csrf
     @method('PUT')
 
     <!-- Вывод ошибок -->
     @if ($errors->any())
-        <div class="errors">
-            <ul>
+        <div class="alert alert-danger">
+            <ul class="mb-0">
                 @foreach ($errors->all() as $error)
-                    <li style="color:red;">{{ $error }}</li>
+                    <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
     <!-- Категория -->
-    <label for="category_id">Категория</label>
-    <select name="category_id" id="category_id" required>
-        <option style="display:none" value="">Выберите категорию</option>
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ (old('category_id', $dish->category_id) == $category->id) ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select><br><br>
+    <div class="mb-3">
+        <label for="category_id" class="form-label">Категория</label>
+        <select name="category_id" id="category_id" class="form-select" required>
+            <option value="" disabled {{ old('category_id', $dish->category_id) ? '' : 'selected' }}>Выберите категорию</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ (old('category_id', $dish->category_id) == $category->id) ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
     <!-- Название -->
-    <label for="name">Название</label>
-    <input type="text" name="name" id="name" value="{{ old('name', $dish->name) }}" required><br><br>
+    <div class="mb-3">
+        <label for="name" class="form-label">Название</label>
+        <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $dish->name) }}" required>
+    </div>
 
     <!-- Метод приготовления -->
-    <label for="preparation_method">Метод приготовления</label>
-    <textarea name="preparation_method" id="preparation_method" required>{{ old('preparation_method', $dish->preparation_method) }}</textarea><br><br>
+    <div class="mb-3">
+        <label for="preparation_method" class="form-label">Метод приготовления</label>
+        <textarea name="preparation_method" id="preparation_method" class="form-control" rows="4" required>{{ old('preparation_method', $dish->preparation_method) }}</textarea>
+    </div>
 
     <!-- Время -->
-    <label for="preparation_time">Время приготовления (мин)</label>
-    <input type="number" name="preparation_time" id="preparation_time" value="{{ old('preparation_time', $dish->preparation_time) }}" required min="1"><br><br>
+    <div class="mb-3">
+        <label for="preparation_time" class="form-label">Время приготовления (мин)</label>
+        <input type="number" name="preparation_time" id="preparation_time" class="form-control" value="{{ old('preparation_time', $dish->preparation_time) }}" required min="1">
+    </div>
 
-    <!-- Кнопки "Добавить" и "Отмена" -->
-    <div style="display: flex; gap: 11px;">
-        <button type="submit">Обновить</button>
-        <a href="{{ route('dishes.index') }}" 
-           style="padding: 3px 6px; background-color: #f44336; color: white; text-decoration: none; border-radius: 2px;">
-            Отмена
-        </a>
+    <!-- Кнопки "Обновить" и "Отмена" -->
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Обновить</button>
+        <a href="{{ route('dishes.index') }}" class="btn btn-danger">Отмена</a>
     </div>
 </form>
+@endsection

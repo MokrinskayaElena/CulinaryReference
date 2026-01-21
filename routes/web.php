@@ -8,16 +8,18 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
 
 // Маршрут для отображения всех категорий
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 // Маршрут для отображения содержимого конкретной категории по ID
-Route::get('/category/{id}', [CategoryController::class, 'show']);
+Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
 
 // Маршрут для отображения всех блюд с указанием категории
 Route::resource('/dishes', DishController::class);
 
+Route::get('/search', [DishController::class, 'search'])->name('search');
+
 // Маршрут для отображения всех ингредиентов для блюда
-Route::get('/dishes/{id}', [DishController::class, 'showIngredients'])->name('dishes.ingredients');
+Route::get('/dishes/{id}/ingredients', [DishController::class, 'showIngredients'])->name('dishes.ingredients');
 
 Route::get('/dishes/create', [DishController::class, 'create'])->name('dishes.create')->middleware('auth');
 
@@ -42,11 +44,6 @@ Route::get('/error', function () {
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-// Новый маршрут для отображения hello.blade.php
-Route::get('/hello', function () {
-    return view('hello', ['title' => 'Добро пожаловать!']);
 });
 
 

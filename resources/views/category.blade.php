@@ -1,41 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>609-11</title>
-</head>
-<body>
-<h2>{{ $category ? "Список блюд категории: " . $category->name : 'Неверный ID категории' }}</h2>
+@extends('layout')
+
+@section('title', 'Блюда категории')
+
+@section('content')
+<h2>
+    <a href="{{ route('categories.index') }}" class="btn btn-secondary btn-sm ml-2" title="Назад">
+        <i class="fa fa-arrow-left"></i>
+    </a>
+    Список блюд категории: {{ $category ? $category->name : 'Неверный ID категории' }}
+</h2>
 
 @if($category && $category->dishes && $category->dishes->count() > 0)
-<table border="1">
+<div class="d-flex align-items-center mb-3">
+</div>
+
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>id</th>
-            <th>category_id</th>
+            <!-- <th>category_id</th> -->
             <th>Наименование</th>
             <th>Способ приготовления</th>
             <th>Время приготовления (мин)</th>
-            <!-- <th>Создано</th>
-            <th>Обновлено</th>
-            <th>Пользователь</th> -->
         </tr>
     </thead>
-    @foreach($category->dishes as $dish)
-    <tr>
-        <td>{{ $dish->id }}</td>
-        <td>{{ $dish->category_id }}</td>
-        <td>{{ $dish->name }}</td>
-        <td>{{ $dish->preparation_method }}</td>
-        <td>{{ $dish->preparation_time }}</td>
-        <!-- <td>{{ $dish->created_at }}</td>
-        <td>{{ $dish->updated_at }}</td>
-        <td>{{ $dish->user_id }}</td> -->
-    </tr>
-    @endforeach
+    <tbody>
+        @foreach($category->dishes as $dish)
+        <tr>
+            <td>{{ $dish->id }}</td>
+            <!-- <td>{{ $dish->category_id }}</td> -->
+            <td>{{ $dish->name }}</td>
+            <td>{{ $dish->preparation_method }}</td>
+            <td>{{ $dish->preparation_time }}</td>
+            <td>
+                <a href="{{ route('dishes.ingredients', ['id' => $dish->id]) }}" class="btn btn-sm btn-primary">
+                    <i class="fa fa-external-link"></i> Перейти
+                </a>
+            </td>
+            
+        </tr>
+        @endforeach
+    </tbody>
 </table>
 @else
-<p>Блюда отсутствуют или категория не найдена.</p>
+<div class="alert alert-info" role="alert">
+    Блюда отсутствуют или категория не найдена.
+</div>
 @endif
-</body>
-</html>
+@endsection
